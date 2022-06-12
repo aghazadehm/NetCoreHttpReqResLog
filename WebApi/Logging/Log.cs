@@ -1,11 +1,15 @@
-﻿namespace WebApi.Logging
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace WebApi.Logging
 {
     public class Log
     {
+        [Key]
+        public long LogId { get; set; }
         public string Path { get; set; }
         public string QueryString { get; set; }
         public string Method { get; set; }
-        public string Payload { get; set; }
+        public string? Payload { get; set; }
         public string Response { get; set; }
         public string ResponseCode { get; set; }
         public DateTime RequestedOn { get; set; }

@@ -4,7 +4,7 @@ namespace WebApi.Logging
 {
     public class LoggerDbContext : DbContext
     {
-        public LoggerDbContext(DbContextOptions options) : base(options)
+        public LoggerDbContext(DbContextOptions<LoggerDbContext> options) : base(options)
         {
         }
 
