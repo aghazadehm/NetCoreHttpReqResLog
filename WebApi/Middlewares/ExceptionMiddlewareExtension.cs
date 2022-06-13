@@ -6,9 +6,9 @@ using WebApi.Logging;
 
 namespace WebApi.Middlewares
 {
-    public static class ExceptionMiddlewareExtensions
+    public static class ExceptionMiddlewareExtension
     {
-        public static void ConfigureExceptionHandler(this IApplicationBuilder app, ILoggerRepository logger)
+        public static void UseCustomExceptionHandler(this IApplicationBuilder app, ILoggerRepository loggerRepository)
         {
             app.UseExceptionHandler(appError =>
             {
@@ -19,7 +19,7 @@ namespace WebApi.Middlewares
                     var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
                     if (contextFeature != null)
                     {
-                        logger.AddErrorLog(new ErrorLog
+                        loggerRepository.AddErrorLog(new ErrorLog
                         {
                             AppName = Assembly.GetEntryAssembly()?.GetName().Name,
                             UserName = context.User?.Identity?.Name,

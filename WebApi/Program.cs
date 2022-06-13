@@ -24,6 +24,7 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+app.UseCustomExceptionHandler(app.Services.GetService<ILoggerRepository>());
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -38,7 +39,6 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.UseMiddleware<LoggerMiddleware>();
-app.ConfigureExceptionHandler(builder.Services.BuildServiceProvider().GetService<ILoggerRepository>());
 
 CreateDbIfNotExists(app);
 

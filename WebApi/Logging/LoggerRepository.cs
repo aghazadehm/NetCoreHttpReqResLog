@@ -14,6 +14,7 @@ namespace WebApi.Logging
         public void AddErrorLog(ErrorLog errorLog)
         {
             _loggerDbContext.ErrorLogs.Add(errorLog);
+            _loggerDbContext.SaveChanges();
         }
 
         public void AddReqResLog(ReqResLog log)
