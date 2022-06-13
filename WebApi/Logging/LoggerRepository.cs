@@ -10,15 +10,26 @@ namespace WebApi.Logging
         {
             _loggerDbContext = dbContextFactory.CreateDbContext();
         }
-        public void Add(Log log)
+
+        public void AddErrorLog(ErrorLog errorLog)
         {
-            _loggerDbContext.Add(log);
+            _loggerDbContext.ErrorLogs.Add(errorLog);
+        }
+
+        public void AddReqResLog(ReqResLog log)
+        {
+            _loggerDbContext.ReqResLogs.Add(log);
             _loggerDbContext.SaveChanges();
         }
 
-        public List<Log> GetAll()
+        public List<ReqResLog> GetAllReqResLogs()
         {
-            return _loggerDbContext.Logs.ToList();
+            return _loggerDbContext.ReqResLogs.ToList();
+        }
+
+        public List<ErrorLog> GetErrorLogs()
+        {
+            return _loggerDbContext.ErrorLogs.ToList();
         }
     }
 }

@@ -2,7 +2,8 @@
 {
     public interface ILoggerRepository
     {
-        void Add(Log log);
-        List<Log> GetAll();
+        void AddReqResLog(ReqResLog log);
+        void AddErrorLog(ErrorLog errorLog);
+        List<ReqResLog> GetAllReqResLogs();
     }
 }

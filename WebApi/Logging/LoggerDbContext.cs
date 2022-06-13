@@ -8,6 +8,7 @@ namespace WebApi.Logging
         {
         }
 
-        public DbSet<Log> Logs { get; set; }
+        public DbSet<ReqResLog> ReqResLogs { get; set; }
+        public DbSet<ErrorLog> ErrorLogs { get; set; }
     }
 }

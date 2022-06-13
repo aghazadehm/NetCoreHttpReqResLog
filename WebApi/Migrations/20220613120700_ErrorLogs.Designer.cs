@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApi.Logging;
 
@@ -11,9 +12,10 @@ using WebApi.Logging;
 namespace WebApi.Migrations
 {
     [DbContext(typeof(LoggerDbContext))]
-    partial class LoggerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220613120700_ErrorLogs")]
+    partial class ErrorLogs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

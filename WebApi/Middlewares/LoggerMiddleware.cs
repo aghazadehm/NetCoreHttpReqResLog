@@ -2,11 +2,11 @@
 
 namespace WebApi.Middlewares
 {
-    public class Logger
+    public class LoggerMiddleware
     {
         RequestDelegate next;
 
-        public Logger(RequestDelegate next)
+        public LoggerMiddleware(RequestDelegate next)
         {
             this.next = next;
         }
@@ -15,8 +15,9 @@ namespace WebApi.Middlewares
         {
             //Request handling comes here
             // create a new log object
-            var log = new Log
+            var log = new ReqResLog
             {
+                UserName = context.User?.Identity?.Name,  
                 Path = context.Request.Path,
                 Method = context.Request.Method,
                 QueryString = context.Request.QueryString.ToString()
@@ -61,7 +62,7 @@ namespace WebApi.Middlewares
 
                         // add the log object to the logger stream 
                         // via the Repo instance injected
-                        repo.Add(log);
+                        repo.AddReqResLog(log);
 
                         // since we have read till the end of the stream, 
                         // reset it onto the first position

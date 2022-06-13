@@ -5,8 +5,13 @@ using WebApi.Middlewares;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+//builder.Host.ConfigureLogging(logging =>
+//{
+//    logging.ClearProviders();
+//    logging.AddConsole();
+//});
 
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContextFactory<LoggerDbContext>(options =>
     options.UseSqlServer(connectionString), ServiceLifetime.Singleton);
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
@@ -32,7 +37,8 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.UseMiddleware<Logger>();
+app.UseMiddleware<LoggerMiddleware>();
+app.ConfigureExceptionHandler(builder.Services.BuildServiceProvider().GetService<ILoggerRepository>());
 
 CreateDbIfNotExists(app);
 
