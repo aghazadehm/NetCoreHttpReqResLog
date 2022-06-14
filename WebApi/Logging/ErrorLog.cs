@@ -12,5 +12,9 @@ namespace WebApi.Logging
         public string? AppName { get; internal set; }
         public string? UserName { get; internal set; }
         public DateTime RequestedOn { get; internal set; }
+        public string? RequestPath { get; internal set; }
+        public string? RequestMethod { get; internal set; }
+        public string? RequestQueryString { get; internal set; }
+        public string? Payload { get; internal set; }
     }
 }

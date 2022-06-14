@@ -19,15 +19,8 @@ namespace WebApi.Middlewares
                     var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
                     if (contextFeature != null)
                     {
-                        loggerRepository.AddErrorLog(new ErrorLog
-                        {
-                            AppName = Assembly.GetEntryAssembly()?.GetName().Name,
-                            UserName = context.User?.Identity?.Name,
-                            StatusCode = context.Response.StatusCode,
-                            Exception = contextFeature.Error.ToString(),
-                            ExceptionMessage = contextFeature.Error.Message,
-                            RequestedOn = DateTime.Now
-                        }); 
+                        var errorLog = await GenerateErrorLog(context, contextFeature);
+                        loggerRepository.AddErrorLog(errorLog); 
 
                         await context.Response.WriteAsync(new ErrorDetails()
                         {
@@ -37,6 +30,32 @@ namespace WebApi.Middlewares
                     }
                 });
             });
+        }
+
+        private static async Task<ErrorLog> GenerateErrorLog(HttpContext context, IExceptionHandlerFeature contextFeature)
+        {
+            var log = new ErrorLog
+            {
+                AppName = Assembly.GetEntryAssembly()?.GetName().Name,
+                UserName = context.User?.Identity?.Name,
+                StatusCode = context.Response.StatusCode,
+                RequestPath = context.Request.Path,
+                RequestMethod = context.Request.Method,
+                RequestQueryString = context.Request.QueryString.ToString(),
+                RequestedOn = DateTime.Now,
+                Exception = contextFeature.Error.ToString(),
+                ExceptionMessage = contextFeature.Error.Message,
+            };
+            // check if the Request is a POST call 
+            // since we need to read from the body
+            if (context.Request.Method == "POST")
+            {
+                context.Request.EnableBuffering();
+                var body = await new StreamReader(context.Request.Body).ReadToEndAsync();
+                context.Request.Body.Position = 0;
+                log.Payload = body;
+            }
+            return log;
         }
     }
 }

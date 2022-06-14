@@ -36,5 +36,11 @@ namespace WebApi.Controllers
             throw new Exception("throw an exception for test");
             //return "exception throwing";
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Post([FromForm] string input)
+        {
+            throw new Exception("thow an exception on Post method");
+        }
     }
 }
