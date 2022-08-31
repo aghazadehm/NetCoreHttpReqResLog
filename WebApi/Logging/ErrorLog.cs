@@ -16,5 +16,6 @@ namespace WebApi.Logging
         public string? RequestMethod { get; internal set; }
         public string? RequestQueryString { get; internal set; }
         public string? Payload { get; internal set; }
+        public string? RequestCorrelationId { get; set; }
     }
 }

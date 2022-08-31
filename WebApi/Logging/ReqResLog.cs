@@ -16,5 +16,6 @@ namespace WebApi.Logging
         public DateTime RequestedOn { get; internal set; }
         public DateTime RespondedOn { get; internal set; }
         public bool IsSuccessStatusCode { get; internal set; }
+        public string? RequestCorrelationId { get; set; }
     }
 }
