@@ -33,13 +33,24 @@ namespace WebApi.Controllers
         [HttpGet(Name = "ExceptionThrowing")]
         public string GetException()
         {
+            var value = new Random().Next(0, 10);
+            if (value > 5)
+            {
+                return  value.ToString();
+            }
             throw new Exception("throw an exception for test");
             //return "exception throwing";
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromForm] string input)
+        public IActionResult Post([FromForm] string input)
         {
+            var value = new Random().Next(10, 20);
+            if (value > 5)
+            {
+                return Ok(value.ToString());
+            }
+
             throw new Exception("thow an exception on Post method");
         }
     }
